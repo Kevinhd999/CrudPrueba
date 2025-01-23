@@ -8,6 +8,8 @@ def deportess():
     deporte = str(input("Juega algun deporte:")).lower()
     if deporte  == 'si':
         deportes = (str(input("Digite el deporte que juega el niño :")))
+    elif deporte == 'no':
+        deportes = ""
     elif deporte != 'si' or deporte != 'no':
         print ("escoja una opcion valida")
         deportess()
@@ -63,21 +65,27 @@ def leer():
 
 
 def actualizar():
+    if len(ninos) == 0:  
+        print("No hay niños registrados.")
+        return
     tarjeta_iden = int(input("Digite la tarjeta del niño que desea modificar "))
     for n in ninos:
         if n ['tarjeta_identidad'] == tarjeta_iden:
             print("Niño encontrado ahora modifique la informacion")
             n ["Nombre"] = str(input("Digite de nuevo el nombre: "))
             n ["Apellido"] = str(input("Digite de nuevo apellido: "))
+            n ["Estrato"] = estratos()
+            n ["Deporte"] = deportess()
             n ["Edad"] = int(input("Digite de nuevo la edad: "))
-            n ["Estrato"] =  estratos()
-            n ["Deporte"] =  deportess()
             n ["Genero"] = str(input("Digite de nuevo el genero: "))
             print("Niño modificado")
         else :
             print("No se encontro niño")
 
 def eliminar():
+    if len(ninos) == 0:  
+        print("No se encontró a ningun niño.")
+        return
     tarjeta_iden = int(input("Digite la tarjeta de identidad del niño que desea eliminar: "))
     for n in ninos:
         if n['tarjeta_identidad'] == tarjeta_iden:
