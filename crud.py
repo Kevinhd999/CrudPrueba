@@ -1,7 +1,6 @@
 nino = {}
 ninos = []
-deportes = ""  
-estrato = ""
+
 ##################################
 def deportess():
     print (" Responda esta pregunta con un si o no")
@@ -27,7 +26,6 @@ def estratos():
         print("Digite el estrato de manera correcta")
         estratos()
     return estrato
-
 
 def crear():
     tarjeta_iden = int(input("Digite la tarjeta de identidad del niño "))
@@ -65,20 +63,20 @@ def leer():
 
 
 def actualizar():
+    leer()
     if len(ninos) == 0:  
         print("No hay niños registrados.")
         return
     tarjeta_iden = int(input("Digite la tarjeta del niño que desea modificar "))
-    for n in ninos:
-        if n ['tarjeta_identidad'] == tarjeta_iden:
+    for persona in ninos:
+        if persona['tarjeta_identidad'] == tarjeta_iden:
             print("Niño encontrado ahora modifique la informacion")
-            n ["Nombre"] = str(input("Digite de nuevo el nombre: "))
-            n ["Apellido"] = str(input("Digite de nuevo apellido: "))
-            n ["Estrato"] = estratos()
-            n ["Deporte"] = deportess()
-            n ["Edad"] = int(input("Digite de nuevo la edad: "))
-            n ["Genero"] = str(input("Digite de nuevo el genero: "))
-            print("Niño modificado")
+            persona["Nombre"] = input("Digite de nuevo el nombre: ")
+            persona["Apellido"] = input("Digite de nuevo apellido: ")
+            persona["Estrato"] = estratos()
+            persona["Deporte"] = deportess()
+            persona["Edad"] = int(input("Digite de nuevo la edad: "))
+            persona["Genero"] = input("Digite de nuevo el genero: ")
         else :
             print("No se encontro niño")
 
