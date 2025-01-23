@@ -6,7 +6,13 @@ estrato = ""
 def deportess():
     print (" si o no")
     deporte = str(input("Juega algun deporte :")).lower()
+    print (" si o no")
+    deporte = str(input("Juega algun deporte :")).lower()
     if deporte  == 'si':
+        deportes = (str(input("Digite el deporte que juega el niño :")))
+    elif deporte != 'si' or deporte != 'no':
+        print ("escoja una opcion valida")
+        deportess()
         deportes = (str(input("Digite el deporte que juega el niño :")))
     elif deporte != 'si' or deporte != 'no':
         print ("escoja una opcion valida")
@@ -28,8 +34,22 @@ def crear():
     tarjeta_iden = int(input("Digite la tarjeta de identidad del niño "))
     nombre = str(input("Digite el nombre del niño: "))
     apellido = str(input("Digite el apellido del niño: "))
+    estrato = str(input("Digite el estrato del niño : ")).lower()
+    if estrato == 'alto' or 'medio' or 'bajo':
+        print(estrato)
+    elif estrato != 'alto' or estrato != 'medio' or estrato != 'bajo':   
+        print("Digite el estrato de manera correcta")
+        estratos()
+
+
+def crear():
+    tarjeta_iden = int(input("Digite la tarjeta de identidad del niño "))
+    nombre = str(input("Digite el nombre del niño: "))
+    apellido = str(input("Digite el apellido del niño: "))
     estratos()
     deportess()
+    edad = int(input("Digite la edad del niño: "))
+    genero = str(input("Digite el genero del niño: "))
     edad = int(input("Digite la edad del niño: "))
     genero = str(input("Digite el genero del niño: "))
 
@@ -53,6 +73,7 @@ def leer():
 while True:
     print ("--------------------------------------------")
     print ("Menu:")
+    print ("Escoja de manera correcta")
     print ("Escoja de manera correcta")
     print ("1. Registrar Niño")
     print ("2. Listar Niños")
