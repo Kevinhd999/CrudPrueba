@@ -1,5 +1,7 @@
 nino = {}
 ninos = []
+deportes = ""  
+estrato = ""
 ##################################
 def deportess():
     print (" si o no")
@@ -31,7 +33,7 @@ def crear():
     edad = int(input("Digite la edad del niño: "))
     genero = str(input("Digite el genero del niño: "))
 
-    nino[tarjeta_iden] = {
+    nino[tarjeta_iden] = {  
             'tarjeta_identidad': tarjeta_iden,
             'nombre': nombre,
             'apellido': apellido,
