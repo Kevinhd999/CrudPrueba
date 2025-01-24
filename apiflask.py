@@ -10,6 +10,7 @@ def hola_mundo():
     response = set.cookies ("user_ip_information", user_ip_information)
     return response
 
+
 @app.route('/Redireccion')
 def informacion():
     user_ip = request.cookies.get("user_ip_information")
