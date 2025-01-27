@@ -10,10 +10,6 @@ app = Flask(__name__)
 def hola_mundo():
     return "Hola acabas de entrar a esta pagina"
 
-@app.route('/welcome')
-def welcome():
-    return 'Bienvenido, admin!'
-
 @app.errorhandler(404)
 def error_endpoint(error): #el parametro de error es de la funcion error_endpoint
     return f"Peticion no encontrada{error}", 404
