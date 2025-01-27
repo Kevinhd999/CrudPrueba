@@ -17,7 +17,7 @@ def incial():
 @app.route("/usuario", methods = ['GET'])
 def usuarios():
     if datos == []:
-        return jsonify({"message": "No hay usuarios registrados"})
+        return jsonify({"message": "No hay usuarios registrados"}), 204
     else:
          return jsonify({"message": "Lista de usuarios", "data": datos})
 
