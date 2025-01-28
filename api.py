@@ -21,7 +21,7 @@ def usuarios():
     else:
          return jsonify({"message": "Lista de usuarios", "data": datos})
 
-@app.route('/añadir_usuario', methods=['POST'])
+@app.route('/registrar_usuario', methods=['POST'])
 def anadir_dato():
         if not request.json or not 'cedula' in request.json or not 'nombre' in request.json or not 'edad' in request.json:
             #if not request.json se encarga que los datos respectivos sean enviados en formato json
