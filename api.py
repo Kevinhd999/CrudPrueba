@@ -19,6 +19,14 @@ def listar_usuarios():
 def registrar_dato():
     if not request.json or not 'cedula' in request.json or not 'nombre' in request.json or not 'edad' in request.json:
         abort(400)
+    if not (8 <= len(str(cedula)) <= 10):
+        return jsonify({"mensaje": "La cédula debe tener entre 8 y 10 dígitos"}), 400
+    if cedula < 0:  
+        return jsonify({"mensaje": "La cédula no puede ser negativa"}), 400
+    if edad < 0:
+        return jsonify({"mensaje": "La edad no puede ser negativa"}), 400
+    if edad > 100:
+        return jsonify({"mensaje": "La edad no puede ser verdad"}), 400
     cedula = request.json['cedula']
     nombre = request.json['nombre']
     edad = request.json['edad']
