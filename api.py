@@ -17,19 +17,19 @@ def listar_usuarios():
 
 @app.route('/registrar_usuario', methods=['POST'])
 def registrar_dato():
-    if not request.json or not 'cedula' in request.json or not 'nombre' in request.json or not 'edad' in request.json:
-        abort(400)
-    if not (8 <= len(str(cedula)) <= 10):
-        return jsonify({"mensaje": "La cédula debe tener entre 8 y 10 dígitos"}), 400
-    if cedula < 0:  
-        return jsonify({"mensaje": "La cédula no puede ser negativa"}), 400
-    if edad < 0:
-        return jsonify({"mensaje": "La edad no puede ser negativa"}), 400
-    if edad > 100:
-        return jsonify({"mensaje": "La edad no puede ser verdad"}), 400
-    cedula = request.json['cedula']
-    nombre = request.json['nombre']
-    edad = request.json['edad']
+    if request.json:
+        cedula = request.json['cedula']
+        nombre = request.json['nombre']
+        edad = request.json['edad']
+        if not (8 <= len(str(cedula)) <= 10):
+            return jsonify({"mensaje": "La cédula debe tener entre 8 y 10 dígitos"}), 400
+        if int(cedula) < 0:  
+            return jsonify({"mensaje": "La cédula no puede ser negativa"}), 400
+        if int(edad) < 0:
+            return jsonify({"mensaje": "La edad no puede ser negativa"}), 400
+        if int(edad) > 100:
+            return jsonify({"mensaje": "La edad no puede ser verdad"}), 400
+
 
     if usuario_por_cedula(cedula):
         return jsonify({"mensaje": "La cédula ya está registrada"}), 409 # conflicto en la solicitud
@@ -39,11 +39,16 @@ def registrar_dato():
 
 @app.route('/editar_usuario/<int:cedula_id>', methods=['PUT'])
 def editarusuario(cedula_id):
-    usuario = usuario_por_cedula(cedula_id)
-    if usuario is None:
-        abort(404)
-    nombre = request.json.get('nombre', usuario[1]) 
-    edad = request.json.get('edad', usuario[2])  
+    if request.json:
+        usuario = usuario_por_cedula(cedula_id)
+        nombre = request.json.get('nombre', usuario[1]) 
+        edad = request.json.get('edad', usuario[2])  
+        if usuario is None:
+            abort(404)
+        if int(edad) < 0:
+                return jsonify({"mensaje": "La edad no puede ser negativa"}), 400
+        if int(edad) > 100:
+                return jsonify({"mensaje": "La edad no puede ser verdad"}), 400
     
 
     actualizar_usuario(cedula_id, nombre, edad)
