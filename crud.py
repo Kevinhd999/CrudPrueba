@@ -1,119 +1,43 @@
-nino = {}
-ninos = []
+from conexion import db_connection
 
-##################################
-def deportess():
-    print (" Responda esta pregunta con un si o no")
-    deporte = str(input("Juega algun deporte:")).lower()
-    if deporte  == 'si':
-        deportes = (str(input("Digite el deporte que juega el niño :")))
-    elif deporte == 'no':
-        deportes = ""
-    elif deporte != 'si' or deporte != 'no':
-        print ("escoja una opcion valida")
-        deportess()
-    return deportes
+def crear_usuario(cedula, nombre, edad):
+    connection = db_connection()
+    cursor = connection.cursor()
+    cursor.execute("INSERT INTO usuarios (cedula, nombre, edad) VALUES (%s, %s, %s)", (cedula, nombre, edad))
+    connection.commit()# Confirma el movimiento o la transacción
+    cursor.close()
+    connection.close()
 
+def lista_usuarios():
+    connection = db_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM usuarios")
+    usuarios = cursor.fetchall()# Devuelve todos los usuarios 
+    cursor.close()
+    connection.close()
+    return usuarios
 
-def estratos():
-    print("Los tipos de estratos a escoger son: ")
-    print("Responda la pregunta segun estas opciones")
-    print("Alto - Medio - Bajo ")
-    estrato = str(input("Digite el estrato del niño : ")).lower()
-    if estrato == 'alto' or 'medio' or 'bajo':
-        print(estrato)
-    elif estrato != 'alto' or estrato != 'medio' or estrato != 'bajo':   
-        print("Digite el estrato de manera correcta")
-        estratos()
-    return estrato
+def usuario_por_cedula(cedula):
+    connection = db_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM usuarios WHERE cedula = %s", (cedula,))
+    usuario = cursor.fetchone()# Devuelve un solo usuario si lo encuentra
+    cursor.close()
+    connection.close()
+    return usuario
 
-def crear():
-    tarjeta_iden = int(input("Digite la tarjeta de identidad del niño "))
-    nombre = str(input("Digite el nombre del niño: "))
-    apellido = str(input("Digite el apellido del niño: "))
-    estrato = estratos()
-    deportes = deportess()
-    edad = int(input("Digite la edad del niño: "))
-    genero = str(input("Digite el genero del niño: "))
+def actualizar_usuario(cedula, nombre, edad):
+    connection = db_connection()
+    cursor = connection.cursor()
+    cursor.execute("UPDATE usuarios SET nombre = %s, edad = %s WHERE cedula = %s", (nombre, edad, cedula))
+    connection.commit() # Confirma el movimiento o la transacción
+    cursor.close()
+    connection.close()
 
-    ninos.append({  
-            'tarjeta_identidad': tarjeta_iden,
-            'nombre': nombre,
-            'apellido': apellido,
-            'estrato': estrato,
-            'deporte': deportes,
-            'edad': edad,
-            'genero': genero
-        })
-
-def leer():
-    if len(ninos) == 0:  
-        print("No hay niños registrados.")
-    else:
-        for n in ninos:  
-            print("\n Información del Niño ")
-            print("Tarjeta de Identidad:", n['tarjeta_identidad'])
-            print("Nombre:", n['nombre'])
-            print("Apellido:", n['apellido'])
-            print("Edad:", n['edad'])
-            print("Estrato:", n['estrato'])
-            print("Deporte:", n['deporte'])
-            print("Genero:", n['genero'])
-            print("\n")
-
-
-def actualizar():
-    leer()
-    if len(ninos) == 0:  
-        print("No hay niños registrados.")
-        return
-    tarjeta_iden = int(input("Digite la tarjeta del niño que desea modificar "))
-    for persona in ninos:
-        if persona['tarjeta_identidad'] == tarjeta_iden:
-            print("Niño encontrado ahora modifique la informacion")
-            persona["Nombre"] = input("Digite de nuevo el nombre: ")
-            persona["Apellido"] = input("Digite de nuevo apellido: ")
-            persona["Estrato"] = estratos()
-            persona["Deporte"] = deportess()
-            persona["Edad"] = int(input("Digite de nuevo la edad: "))
-            persona["Genero"] = input("Digite de nuevo el genero: ")
-        else :
-            print("No se encontro niño")
-
-def eliminar():
-    if len(ninos) == 0:  
-        print("No se encontró a ningun niño.")
-        return
-    tarjeta_iden = int(input("Digite la tarjeta de identidad del niño que desea eliminar: "))
-    for n in ninos:
-        if n['tarjeta_identidad'] == tarjeta_iden:
-            ninos.remove(n)
-            print(f"Niño con tarjeta de identidad {tarjeta_iden} eliminado exitosamente.")
-        else:
-            print("No se encontró un niño con esa tarjeta de identidad.")
-
-#Menu#
-
-while True:
-    print ("--------------------------------------------")
-    print ("Menu:")
-    print ("Escoja de manera correcta")
-    print ("1. Registrar Niño")
-    print ("2. Listar Niños")
-    print ("3. Actualizar Niño")
-    print ("4. Eliminar Niño")
-    print ("5. Salir")
-    opcion = int(input("Escoja una opcion: "))
-    if opcion == 1:
-        crear()
-    elif opcion == 2:
-        leer()
-    elif opcion == 3:
-        actualizar()
-    elif opcion == 4:
-        eliminar()
-    elif opcion == 5:
-        print("Fin del programa")
-        break
-    else:
-        print("Opción no válida. Por favor, seleccione una opción correcta.")
+def eliminar_usuario(cedula):
+    connection = db_connection()
+    cursor = connection.cursor()
+    cursor.execute("DELETE FROM usuarios WHERE cedula = %s", (cedula,))
+    connection.commit()# Confirma el movimiento o la transacción
+    cursor.close()
+    connection.close()
