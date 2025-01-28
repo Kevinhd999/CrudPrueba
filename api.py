@@ -24,7 +24,7 @@ def registrar_dato():
     edad = request.json['edad']
 
     if usuario_por_cedula(cedula):
-        return jsonify({"mensaje": "La cédula ya está registrada"}), 400
+        return jsonify({"mensaje": "La cédula ya está registrada"}), 409 # conflicto en la solicitud
 
     crear_usuario(cedula, nombre, edad)
     return jsonify({"mensaje": "Datos agregados correctamente"}), 201
@@ -34,8 +34,6 @@ def editarusuario(cedula_id):
     usuario = usuario_por_cedula(cedula_id)
     if usuario is None:
         abort(404)
-    if not request.json:
-        abort(400)
     nombre = request.json.get('nombre', usuario[1]) 
     edad = request.json.get('edad', usuario[2])  
     
@@ -48,9 +46,7 @@ def actualizar_usuario_parcial(cedula_id):
     usuario = usuario_por_cedula(cedula_id)
     if usuario is None:
         abort(404)
-    if not request.json:
-        abort(400)
-        
+
     nombre = usuario[1]
     edad = usuario[2] 
 
